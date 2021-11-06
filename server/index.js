@@ -23,6 +23,9 @@ io.on("connection",(socket) => {
     socket.on("join_room", (data) => {
         socket.join(data);
         console.log(`user with ID : ${socket.id} joined room: ${data}`);
+    });
+    socket.on("send_message", (data) => {
+        socket.to(data.room).emit("receive_message", data);
     })
     socket.on("disconnect", () =>{
         console.log("User Disconnected", socket.id);
@@ -30,5 +33,5 @@ io.on("connection",(socket) => {
 });
 
 
-const PORT = 3001;
+const PORT = 3002;
 server.listen(PORT, () => console.log(`Server Running on port ${PORT}`));
